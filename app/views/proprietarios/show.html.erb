@@ -1,10 +1,29 @@
 <p style="color: green"><%= notice %></p>
 
+<% content_for :title, "Proprietário" %>
+
+<h1>Proprietário</h1>
+
 <%= render @proprietario %>
 
-<div>
-  <%= link_to "Edit this proprietario", edit_proprietario_path(@proprietario) %> |
-  <%= link_to "Back to proprietarios", proprietarios_path %>
+<hr>
 
-  <%= button_to "Destroy this proprietario", @proprietario, method: :delete %>
+<h2>Veículos</h2>
+
+<p>
+  <strong>Total:</strong> <%= @proprietario.veiculos.count %>
+</p>
+
+<p>
+  <%= link_to "Listar veículos", proprietario_veiculos_path(@proprietario) %> |
+  <%= link_to "Adicionar veículo", new_proprietario_veiculo_path(@proprietario) %>
+</p>
+
+<hr>
+
+<div>
+  <%= link_to "Editar proprietário", edit_proprietario_path(@proprietario) %> |
+  <%= link_to "Voltar para proprietários", proprietarios_path %>
+
+  <%= button_to "Excluir proprietário", @proprietario, method: :delete, data: { turbo_confirm: "Tem certeza?" } %>
 </div>

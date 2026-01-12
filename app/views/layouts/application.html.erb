@@ -24,6 +24,25 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <header style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #eee;">
+        <h2 style="margin: 0;">Detran</h2>
+        <nav style="margin-top: 8px;">
+          <%= link_to "Proprietários", proprietarios_path %>
+        </nav>
+      </header>
+
+      <% if notice.present? %>
+        <div class="flash flash-notice"><%= notice %></div>
+      <% end %>
+
+      <% if alert.present? %>
+        <div class="flash flash-alert"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+
   </body>
 </html>

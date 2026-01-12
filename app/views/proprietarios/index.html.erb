@@ -1,16 +1,23 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Proprietarios" %>
+<% content_for :title, "Proprietários" %>
 
-<h1>Proprietarios</h1>
+<h1>Proprietários</h1>
+
+<p>
+  <%= link_to "Novo proprietário", new_proprietario_path %>
+</p>
 
 <div id="proprietarios">
   <% @proprietarios.each do |proprietario| %>
-    <%= render proprietario %>
-    <p>
-      <%= link_to "Show this proprietario", proprietario %>
-    </p>
+    <div style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd;">
+      <%= render proprietario %>
+
+      <p>
+        <%= link_to "Ver proprietário", proprietario_path(proprietario) %> |
+        <%= link_to "Veículos (#{proprietario.veiculos.count})", proprietario_veiculos_path(proprietario) %> |
+        <%= link_to "Adicionar veículo", new_proprietario_veiculo_path(proprietario) %>
+      </p>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New proprietario", new_proprietario_path %>

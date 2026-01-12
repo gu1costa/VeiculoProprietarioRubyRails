@@ -8,4 +8,3 @@ class Proprietario < ApplicationRecord
            foreign_key: :id_prop,
            dependent: :restrict_with_error
 end
-
