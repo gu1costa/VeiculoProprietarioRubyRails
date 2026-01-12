@@ -1,32 +1,51 @@
-<%= form_with(model: proprietario) do |form| %>
+<%= form_with(model: proprietario) do |f| %>
   <% if proprietario.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(proprietario.errors.count, "error") %> prohibited this proprietario from being saved:</h2>
-
-      <ul>
-        <% proprietario.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="alert alert-error">
+      <strong>Não foi possível salvar:</strong>
+      <ul style="margin-left: 18px; margin-top: 8px;">
+        <% proprietario.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :cpf_cnpj, style: "display: block" %>
-    <%= form.text_field :cpf_cnpj %>
+  <div class="form-group">
+    <label>CPF/CNPJ <span class="required">*</span></label>
+    <%= f.text_field :cpf_cnpj,
+                     class: "form-control",
+                     maxlength: 14,
+                     placeholder: "Digite apenas números (11 dígitos para CPF ou 14 para CNPJ)",
+                     required: true,
+                     inputmode: "numeric" %>
   </div>
 
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
+  <div class="form-group">
+    <label>Nome Completo <span class="required">*</span></label>
+    <%= f.text_field :nome,
+                     class: "form-control",
+                     maxlength: 100,
+                     placeholder: "Digite o nome completo do proprietário",
+                     required: true %>
   </div>
 
-  <div>
-    <%= form.label :endereco, style: "display: block" %>
-    <%= form.textarea :endereco %>
+  <div class="form-group">
+    <label>Endereço Completo <span class="required">*</span></label>
+    <%= f.text_field :endereco,
+                     class: "form-control",
+                     placeholder: "Rua, número, bairro, cidade - UF",
+                     required: true %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="button-group">
+    <%= f.submit(proprietario.persisted? ? "💾 Salvar Alterações" : "➕ Cadastrar Proprietário", class: "btn") %>
+    <%= link_to "Cancelar", proprietarios_path, class: "btn btn-secondary" %>
   </div>
 <% end %>
+
+<script>
+    // CPF/CNPJ: só números
+    document.querySelector('input[name="proprietario[cpf_cnpj]"]')?.addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+</script>

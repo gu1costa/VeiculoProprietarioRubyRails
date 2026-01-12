@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Detran" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Detran">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title><%= content_for(:title) || "Sistema DETRAN" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
-    <div class="container">
-      <header style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #eee;">
-        <h2 style="margin: 0;">Detran</h2>
-        <nav style="margin-top: 8px;">
-          <%= link_to "Proprietários", proprietarios_path %>
-        </nav>
-      </header>
-
-      <% if notice.present? %>
-        <div class="flash flash-notice"><%= notice %></div>
-      <% end %>
-
-      <% if alert.present? %>
-        <div class="flash flash-alert"><%= alert %></div>
-      <% end %>
-
-      <%= yield %>
+<body>
+<div class="header">
+  <div class="header-content">
+    <div class="logo">
+      <h1><%= content_for(:header_title) || "Sistema DETRAN" %></h1>
     </div>
-  </body>
 
-  </body>
+    <% if content_for?(:header_actions) %>
+      <div class="header-actions">
+        <%= yield :header_actions %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="main-content">
+  <% if content_for?(:page_title) %>
+    <h2 class="page-title"><%= yield :page_title %></h2>
+  <% end %>
+
+  <% if notice.present? %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <% if alert.present? %>
+    <div class="alert alert-error"><%= alert %></div>
+  <% end %>
+
+  <%= yield %>
+</div>
+
+<div class="footer">
+  <p><%= content_for(:footer) || "Sistema DETRAN - Versão 1.0 | © 2025 Departamento Estadual de Trânsito" %></p>
+</div>
+</body>
 </html>

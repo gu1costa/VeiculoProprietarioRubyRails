@@ -1,27 +1,59 @@
-<%= form_with(model: [@proprietario, @veiculo]) do |form| %>
-  <% if @veiculo.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@veiculo.errors.count, "erro") %> impediram o veículo de ser salvo:</h2>
-
-      <ul>
-        <% @veiculo.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<%= form_with(model: [proprietario, veiculo]) do |f| %>
+  <% if veiculo.errors.any? %>
+    <div class="alert alert-error">
+      <strong>Não foi possível salvar:</strong>
+      <ul style="margin-left: 18px; margin-top: 8px;">
+        <% veiculo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :placa, style: "display: block" %>
-    <%= form.text_field :placa %>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="placa">Placa * (sem formatação)</label>
+      <%= f.text_field :placa,
+                       id: "placa",
+                       class: "form-control",
+                       maxlength: 7,
+                       placeholder: "ABC1234",
+                       required: true %>
+    </div>
+
+    <div class="form-group">
+      <label for="renavam">RENAVAM * (somente números)</label>
+      <%= f.text_field :renavam,
+                       id: "renavam",
+                       class: "form-control",
+                       maxlength: 11,
+                       placeholder: "00000000000",
+                       required: true,
+                       inputmode: "numeric" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :renavam, style: "display: block" %>
-    <%= form.text_field :renavam %>
+  <div class="proprietario-info">
+    <strong>Proprietário:</strong><br>
+    <strong>Nome:</strong> <%= proprietario.nome %><br>
+    <strong>CPF/CNPJ:</strong> <%= proprietario.cpf_cnpj %><br>
+    <strong>Endereço:</strong> <%= proprietario.endereco %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= f.submit(veiculo.persisted? ? "Salvar Alterações" : "Cadastrar Veículo", class: "btn") %>
+    <%= link_to "Cancelar", proprietario_veiculos_path(proprietario), class: "btn btn-outline" %>
   </div>
 <% end %>
+
+<script>
+    // Campo RENAVAM: permite apenas números
+    document.getElementById('renavam')?.addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+
+    // Campo Placa: maiúsculas e remove especiais
+    document.getElementById('placa')?.addEventListener('input', function(e) {
+        e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    });
+</script>

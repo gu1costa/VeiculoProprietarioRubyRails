@@ -1,0 +1,210 @@
+<% content_for :title, "Consulta de Veículos - DETRAN" %>
+
+    <div class="header-actions">
+      <%= link_to "← Voltar", root_path, class: "back-btn" %>
+    </div>
+  </div>
+</div>
+
+
+<div class="card" style="max-width: 900px; margin: 0 auto;">
+  <h2 class="page-title" style="margin-bottom: 16px;">Consulta de Veículos por Placa ou CPF/CNPJ</h2>
+
+  <div class="tabs">
+    <button type="button" class="tab is-active" data-tab="placa">Placa</button>
+    <button type="button" class="tab" data-tab="cpf">CPF/CNPJ</button>
+  </div>
+
+  <div class="tab-panels">
+    <!-- ABA PLACA -->
+    <div class="tab-panel is-active" data-panel="placa">
+      <%= form_with url: consulta_path, method: :get, local: true do |f| %>
+        <%# Se o seu helper for `consultas_path` (plural), troque a linha acima por:
+            # form_with url: consultas_path, method: :get, local: true
+        %>
+
+        <%= hidden_field_tag :tab, "placa" %>
+
+        <div class="form-group">
+          <label>Número da Placa (sem formatação)</label>
+          <%= f.text_field :placa,
+                           value: params[:placa],
+                           class: "form-control",
+                           maxlength: 7,
+                           placeholder: "EX: ABC1D23 (7 CARACTERES)",
+                           id: "placa" %>
+        </div>
+
+        <div class="button-group">
+          <%= f.submit "Consultar", class: "btn" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- ABA CPF/CNPJ -->
+    <div class="tab-panel" data-panel="cpf">
+      <%= form_with url: consulta_path, method: :get, local: true do |f| %>
+        <%= hidden_field_tag :tab, "cpf" %>
+
+        <div class="form-group">
+          <label>CPF/CNPJ (somente números)</label>
+          <%= f.text_field :cpf_cnpj,
+                           value: params[:cpf_cnpj],
+                           class: "form-control",
+                           maxlength: 14,
+                           placeholder: "EX: 12345678901",
+                           id: "cpf_cnpj",
+                           inputmode: "numeric" %>
+        </div>
+
+        <div class="button-group">
+          <%= f.submit "Consultar", class: "btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% buscou = params[:placa].present? || params[:cpf_cnpj].present? %>
+
+<% if buscou %>
+  <div class="card" style="max-width: 900px; margin: 22px auto 0;">
+    <% if params[:placa].present? %>
+      <h3 class="result-title">Veículo Encontrado</h3>
+
+      <% if @veiculo.present? %>
+        <div class="result-panel">
+          <div class="result-top">
+            <div class="result-plate"><%= @veiculo.placa %></div>
+            <div class="result-status">Cadastrado</div>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <div class="result-label">PLACA</div>
+              <div class="result-value"><%= @veiculo.placa %></div>
+            </div>
+
+            <div class="result-box">
+              <div class="result-label">RENAVAM</div>
+              <div class="result-value"><%= @veiculo.renavam %></div>
+            </div>
+
+            <div class="result-box">
+              <div class="result-label">PROPRIETÁRIO</div>
+              <div class="result-value"><%= @proprietario&.nome %></div>
+            </div>
+
+            <div class="result-box">
+              <div class="result-label">CPF/CNPJ</div>
+              <div class="result-value"><%= @proprietario&.cpf_cnpj %></div>
+            </div>
+
+            <div class="result-box result-box-wide">
+              <div class="result-label">ENDEREÇO</div>
+              <div class="result-value"><%= @proprietario&.endereco %></div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <strong>Nenhum veículo encontrado</strong>
+          <p>Verifique a placa e tente novamente.</p>
+        </div>
+      <% end %>
+
+    <% else %>
+      <h3 class="result-title">Veículos do Proprietário</h3>
+
+      <% if @proprietario.present? %>
+        <div class="owner-header">
+          <div>
+            <div class="owner-name"><%= @proprietario.nome %></div>
+            <div class="owner-sub">
+              CPF/CNPJ: <strong><%= @proprietario.cpf_cnpj %></strong>
+              · Endereço: <%= @proprietario.endereco %>
+            </div>
+          </div>
+          <div class="owner-badge"><%= @veiculos.size %> veículo(s)</div>
+        </div>
+
+        <% if @veiculos.any? %>
+          <div class="table-container">
+            <table>
+              <thead>
+              <tr>
+                <th>Placa</th>
+                <th>Renavam</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @veiculos.each do |v| %>
+                <tr>
+                  <td><strong><%= v.placa %></strong></td>
+                  <td><%= v.renavam %></td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="empty-state">
+            <strong>Esse proprietário não possui veículos.</strong>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="empty-state">
+          <strong>Nenhum proprietário encontrado</strong>
+          <p>Verifique o CPF/CNPJ e tente novamente.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<script>
+    function initConsultaTabs() {
+        const tabs = document.querySelectorAll(".tab");
+        const panels = document.querySelectorAll(".tab-panel");
+        if (!tabs.length || !panels.length) return;
+
+        function activate(tabName) {
+            tabs.forEach(t => t.classList.toggle("is-active", t.dataset.tab === tabName));
+            panels.forEach(p => p.classList.toggle("is-active", p.dataset.panel === tabName));
+        }
+
+        tabs.forEach(t => {
+            t.addEventListener("click", (e) => {
+                e.preventDefault();
+                activate(t.dataset.tab);
+            });
+        });
+
+        // mantém a aba correta após buscar (via ?tab=cpf ou ?tab=placa)
+        const params = new URLSearchParams(window.location.search);
+        const initialTab = params.get("tab") || (params.get("cpf_cnpj") ? "cpf" : "placa");
+        activate(initialTab);
+    }
+
+    document.addEventListener("turbo:load", initConsultaTabs);
+    document.addEventListener("DOMContentLoaded", initConsultaTabs);
+
+    function initConsultaMasks() {
+        const cpf = document.getElementById("cpf_cnpj");
+        if (cpf) {
+            cpf.addEventListener("input", (e) => {
+                e.target.value = e.target.value.replace(/\D/g, "");
+            });
+        }
+
+        const placa = document.getElementById("placa");
+        if (placa) {
+            placa.addEventListener("input", (e) => {
+                e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+            });
+        }
+    }
+
+    document.addEventListener("turbo:load", initConsultaMasks);
+    document.addEventListener("DOMContentLoaded", initConsultaMasks);
+</script>

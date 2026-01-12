@@ -1,19 +1,28 @@
-<h1>Veículo</h1>
+<% content_for :title, "Veículo" %>
 
-<p><strong>Proprietário:</strong> <%= @proprietario.nome %> (<%= @proprietario.cpf_cnpj %>)</p>
-<p><strong>Placa:</strong> <%= @veiculo.placa %></p>
-<p><strong>Renavam:</strong> <%= @veiculo.renavam %></p>
+<% if notice.present? %>
+  <div class="flash flash-ok"><%= notice %></div>
+<% end %>
 
-<br>
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+    <div>
+      <h2 style="margin:0;"><%= @veiculo.placa %></h2>
+      <p style="margin:6px 0 0 0; color:#4b5563;">
+        RENAVAM: <strong><%= @veiculo.renavam %></strong>
+      </p>
+      <p style="margin:6px 0 0 0; color:#4b5563;">
+        Proprietário: <strong><%= @proprietario.nome %></strong> (<%= @proprietario.cpf_cnpj %>)
+      </p>
+    </div>
 
-<div>
-  <%= link_to "Editar", edit_proprietario_veiculo_path(@proprietario, @veiculo) %> |
-  <%= link_to "Voltar para veículos", proprietario_veiculos_path(@proprietario) %> |
-  <%= link_to "Ver proprietário", proprietario_path(@proprietario) %>
-</div>
-
-<br>
-
-<div>
-  <%= button_to "Excluir veículo", proprietario_veiculo_path(@proprietario, @veiculo), method: :delete, data: { turbo_confirm: "Tem certeza?" } %>
+    <div class="actions">
+      <%= link_to "Voltar", proprietario_veiculos_path(@proprietario), class: "btn btn-muted" %>
+      <%= link_to "Editar", edit_proprietario_veiculo_path(@proprietario, @veiculo), class: "btn" %>
+      <%= link_to "Excluir",
+                  proprietario_veiculo_path(@proprietario, @veiculo),
+                  data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" },
+                  class: "btn btn-danger" %>
+    </div>
+  </div>
 </div>

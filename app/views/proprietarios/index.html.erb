@@ -1,23 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Gerenciar Proprietários - DETRAN" %>
+<% content_for :header_title, "Gerenciamento de Proprietários" %>
+<% content_for :page_title, "Proprietários Cadastrados" %>
 
-<% content_for :title, "Proprietários" %>
+<% content_for :header_actions do %>
+  <%= link_to "← Voltar", root_path, class: "back-btn" %>
+  <%= link_to "+ Novo Proprietário", new_proprietario_path, class: "new-btn" %>
+<% end %>
 
-<h1>Proprietários</h1>
+<% if @proprietarios.present? %>
+  <div class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>CPF/CNPJ</th>
+        <th>Nome</th>
+        <th>Endereço</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
 
-<p>
-  <%= link_to "Novo proprietário", new_proprietario_path %>
-</p>
+      <tbody>
+      <% @proprietarios.each do |p| %>
+        <tr>
+          <td><%= p.id %></td>
+          <td><%= p.cpf_cnpj %></td>
+          <td><%= p.nome %></td>
+          <td><%= p.endereco %></td>
+          <td>
+            <div class="actions">
+              <%= link_to "Veículos", proprietario_veiculos_path(p), class: "btn btn-sm" %>
+              <%= link_to "Editar", edit_proprietario_path(p), class: "btn btn-sm btn-outline" %>
+              <%= link_to "Remover",
+                          proprietario_path(p),
+                          class: "btn btn-sm btn-danger",
+                          data: { turbo_method: :delete, turbo_confirm: "ATENÇÃO: Esta ação irá remover o proprietário e todos os veículos associados. Deseja continuar?" } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<div id="proprietarios">
-  <% @proprietarios.each do |proprietario| %>
-    <div style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd;">
-      <%= render proprietario %>
-
-      <p>
-        <%= link_to "Ver proprietário", proprietario_path(proprietario) %> |
-        <%= link_to "Veículos (#{proprietario.veiculos.count})", proprietario_veiculos_path(proprietario) %> |
-        <%= link_to "Adicionar veículo", new_proprietario_veiculo_path(proprietario) %>
-      </p>
-    </div>
+  <% content_for :footer do %>
+    Sistema DETRAN - Gerenciamento de Proprietários | Total: <%= @proprietarios.size %> registros
   <% end %>
-</div>
+<% else %>
+  <div class="empty-state">
+    <h3>Nenhum proprietário cadastrado</h3>
+    <p>Cadastre o primeiro proprietário para começar</p>
+    <%= link_to "Cadastrar Proprietário", new_proprietario_path, class: "btn", style: "margin-top: 20px;" %>
+  </div>
+
+  <% content_for :footer do %>
+    Sistema DETRAN - Gerenciamento de Proprietários | Total: 0 registros
+  <% end %>
+<% end %>

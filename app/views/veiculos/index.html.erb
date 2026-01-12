@@ -1,29 +1,60 @@
-<h1>Veículos de <%= @proprietario.nome %></h1>
+<% content_for :title, "Gerenciar Veículos - DETRAN" %>
+<% content_for :header_title, "Gerenciamento de Veículos" %>
+<% content_for :page_title, "Veículos Cadastrados" %>
 
-<p>
-  <%= link_to "Novo veículo", new_proprietario_veiculo_path(@proprietario) %> |
-  <%= link_to "Voltar para proprietário", proprietario_path(@proprietario) %> |
-  <%= link_to "Lista de proprietários", proprietarios_path %>
-</p>
+<% content_for :header_actions do %>
+  <%= link_to "← Voltar", proprietarios_path, class: "back-btn" %>
+  <%= link_to "+ Novo Veículo", new_proprietario_veiculo_path(@proprietario), class: "new-btn" %>
+<% end %>
 
-<table>
-  <thead>
-  <tr>
-    <th>Placa</th>
-    <th>Renavam</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+<div class="table-container">
+  <% if @veiculos.present? %>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Placa</th>
+        <th>RENAVAM</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
 
-  <tbody>
-  <% @veiculos.each do |veiculo| %>
-    <tr>
-      <td><%= veiculo.placa %></td>
-      <td><%= veiculo.renavam %></td>
-      <td><%= link_to "Ver", proprietario_veiculo_path(@proprietario, veiculo) %></td>
-      <td><%= link_to "Editar", edit_proprietario_veiculo_path(@proprietario, veiculo) %></td>
-      <td><%= button_to "Excluir", proprietario_veiculo_path(@proprietario, veiculo), method: :delete, data: { turbo_confirm: "Tem certeza?" } %></td>
-    </tr>
+      <tbody>
+      <% @veiculos.each do |v| %>
+        <tr>
+          <td><%= v.id %></td>
+          <td><strong><%= v.placa %></strong></td>
+          <td><%= v.renavam %></td>
+          <td>
+            <div class="actions">
+              <%= link_to "Editar",
+                          edit_proprietario_veiculo_path(@proprietario, v),
+                          class: "btn btn-sm btn-outline" %>
+
+              <%= link_to "Remover",
+                          proprietario_veiculo_path(@proprietario, v),
+                          class: "btn btn-sm btn-danger",
+                          data: { turbo_method: :delete, turbo_confirm: "Deseja realmente remover este veículo?" } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <% content_for :footer do %>
+      Sistema DETRAN - Gerenciamento de Veículos | Total: <%= @veiculos.size %> registros
+    <% end %>
+  <% else %>
+    <div class="empty-state">
+      <h3>Nenhum veículo cadastrado</h3>
+      <p>Cadastre o primeiro veículo para começar</p>
+      <%= link_to "Cadastrar Veículo", new_proprietario_veiculo_path(@proprietario),
+                  class: "btn", style: "margin-top: 20px;" %>
+    </div>
+
+    <% content_for :footer do %>
+      Sistema DETRAN - Gerenciamento de Veículos | Total: 0 registros
+    <% end %>
   <% end %>
-  </tbody>
-</table>
+</div>

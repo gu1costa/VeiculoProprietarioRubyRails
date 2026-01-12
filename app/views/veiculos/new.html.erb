@@ -1,11 +1,20 @@
-<% content_for :title, "Novo veículo" %>
+<% content_for :title, "Cadastro de Veículo - DETRAN" %>
+<% content_for :header_title, "Cadastro de Veículo" %>
 
-<h1>Novo veículo</h1>
+<% content_for :header_actions do %>
+  <%= link_to "← Voltar para Lista", proprietario_veiculos_path(@proprietario), class: "back-btn" %>
+<% end %>
 
-<%= render "form", veiculo: @veiculo, proprietario: @proprietario %>
+<div class="card">
+  <div class="card-header">
+    <h2>Novo Veículo</h2>
+  </div>
 
-<br>
-
-<div>
-  <%= link_to "Voltar para veículos", proprietario_veiculos_path(@proprietario) %>
+  <div class="card-body">
+    <%= render "form", veiculo: @veiculo, proprietario: @proprietario %>
+  </div>
 </div>
+
+<% content_for :footer do %>
+  Sistema DETRAN - Cadastro de Veículos
+<% end %>

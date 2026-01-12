@@ -1,0 +1,27 @@
+<% content_for :title, "Sistema DETRAN - Gerenciamento de Veículos" %>
+<% content_for :header_title, "Sistema DETRAN" %>
+<% content_for :page_title, "Painel de Controle" %>
+
+<div class="dashboard-cards">
+  <div class="card">
+    <div class="card-icon">🔍</div>
+    <h3 class="card-title">Consultar Veículos</h3>
+    <p class="card-description">
+      Consulte veículos por placa ou CPF/CNPJ do proprietário.
+      Acesso rápido às informações cadastrais.
+    </p>
+
+    <%= link_to "Acessar Consulta", consulta_veiculos_path, class: "btn" %>
+
+  </div>
+
+  <div class="card">
+    <div class="card-icon">👥</div>
+    <h3 class="card-title">Gerenciar Proprietários</h3>
+    <p class="card-description">
+      Cadastro, edição e gerenciamento de proprietários e seus veículos.
+      Controle completo de dados cadastrais.
+    </p>
+    <%= link_to "Gerenciar", proprietarios_path, class: "btn" %>
+  </div>
+</div>

@@ -1,12 +1,13 @@
-<% content_for :title, "Editing proprietario" %>
+<% content_for :title, "Proprietário - DETRAN" %>
+<% content_for :header_title, "Editar Proprietário" %>
+<% content_for :page_title, "Atualizar Dados do Proprietário" %>
 
-<h1>Editing proprietario</h1>
+<% content_for :header_actions do %>
+  <%= link_to "← Voltar para Lista", proprietarios_path, class: "back-btn" %>
+  <%= link_to "Veículos do Proprietário", proprietario_veiculos_path(@proprietario), class: "new-btn" %>
+<% end %>
 
-<%= render "form", proprietario: @proprietario %>
-
-<br>
-
-<div>
-  <%= link_to "Show this proprietario", @proprietario %> |
-  <%= link_to "Back to proprietarios", proprietarios_path %>
+<div class="card">
+  <h3 class="card-title">Informações do Proprietário</h3>
+  <%= render "form", proprietario: @proprietario %>
 </div>

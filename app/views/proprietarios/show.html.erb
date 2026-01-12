@@ -1,29 +1,32 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Proprietário" %>
 
-<h1>Proprietário</h1>
+<% if notice.present? %>
+  <div class="flash flash-ok"><%= notice %></div>
+<% end %>
 
-<%= render @proprietario %>
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+    <div>
+      <h2 style="margin:0;"><%= @proprietario.nome %></h2>
+      <p style="margin:6px 0 0 0; color:#4b5563;">
+        CPF/CNPJ: <strong><%= @proprietario.cpf_cnpj %></strong>
+      </p>
+      <p style="margin:6px 0 0 0; color:#4b5563;">
+        Endereço: <%= @proprietario.endereco %>
+      </p>
+      <p style="margin:6px 0 0 0; color:#4b5563;">
+        Veículos: <strong><%= @proprietario.veiculos.count %></strong>
+      </p>
+    </div>
 
-<hr>
-
-<h2>Veículos</h2>
-
-<p>
-  <strong>Total:</strong> <%= @proprietario.veiculos.count %>
-</p>
-
-<p>
-  <%= link_to "Listar veículos", proprietario_veiculos_path(@proprietario) %> |
-  <%= link_to "Adicionar veículo", new_proprietario_veiculo_path(@proprietario) %>
-</p>
-
-<hr>
-
-<div>
-  <%= link_to "Editar proprietário", edit_proprietario_path(@proprietario) %> |
-  <%= link_to "Voltar para proprietários", proprietarios_path %>
-
-  <%= button_to "Excluir proprietário", @proprietario, method: :delete, data: { turbo_confirm: "Tem certeza?" } %>
+    <div class="actions">
+      <%= link_to "Voltar", proprietarios_path, class: "btn btn-muted" %>
+      <%= link_to "Editar", edit_proprietario_path(@proprietario), class: "btn" %>
+      <%= link_to "Veículos", proprietario_veiculos_path(@proprietario), class: "btn btn-primary" %>
+      <%= link_to "Excluir",
+                  proprietario_path(@proprietario),
+                  data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" },
+                  class: "btn btn-danger" %>
+    </div>
+  </div>
 </div>
