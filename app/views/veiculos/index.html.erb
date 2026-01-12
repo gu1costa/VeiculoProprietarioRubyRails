@@ -1,16 +1,29 @@
-<p style="color: green"><%= notice %></p>
+<h1>Veículos de <%= @proprietario.nome %></h1>
 
-<% content_for :title, "Veiculos" %>
+<p>
+  <%= link_to "Novo veículo", new_proprietario_veiculo_path(@proprietario) %> |
+  <%= link_to "Voltar para proprietário", proprietario_path(@proprietario) %> |
+  <%= link_to "Lista de proprietários", proprietarios_path %>
+</p>
 
-<h1>Veiculos</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Placa</th>
+    <th>Renavam</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
 
-<div id="veiculos">
+  <tbody>
   <% @veiculos.each do |veiculo| %>
-    <%= render veiculo %>
-    <p>
-      <%= link_to "Show this veiculo", veiculo %>
-    </p>
+    <tr>
+      <td><%= veiculo.placa %></td>
+      <td><%= veiculo.renavam %></td>
+      <td><%= link_to "Ver", proprietario_veiculo_path(@proprietario, veiculo) %></td>
+      <td><%= link_to "Editar", edit_proprietario_veiculo_path(@proprietario, veiculo) %></td>
+      <td><%= button_to "Excluir", proprietario_veiculo_path(@proprietario, veiculo), method: :delete, data: { turbo_confirm: "Tem certeza?" } %></td>
+    </tr>
   <% end %>
-</div>
-
-<%= link_to "New veiculo", new_veiculo_path %>
+  </tbody>
+</table>

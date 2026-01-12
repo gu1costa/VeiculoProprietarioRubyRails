@@ -1,70 +1,53 @@
 class VeiculosController < ApplicationController
-  before_action :set_veiculo, only: %i[ show edit update destroy ]
+  before_action :set_proprietario
+  before_action :set_veiculo, only: %i[show edit update destroy]
 
-  # GET /veiculos or /veiculos.json
   def index
-    @veiculos = Veiculo.all
+    @veiculos = @proprietario.veiculos
   end
 
-  # GET /veiculos/1 or /veiculos/1.json
-  def show
-  end
+  def show; end
 
-  # GET /veiculos/new
   def new
-    @veiculo = Veiculo.new
+    @veiculo = @proprietario.veiculos.build
   end
 
-  # GET /veiculos/1/edit
-  def edit
-  end
+  def edit; end
 
-  # POST /veiculos or /veiculos.json
   def create
-    @veiculo = Veiculo.new(veiculo_params)
+    @veiculo = @proprietario.veiculos.build(veiculo_params)
 
-    respond_to do |format|
-      if @veiculo.save
-        format.html { redirect_to @veiculo, notice: "Veiculo was successfully created." }
-        format.json { render :show, status: :created, location: @veiculo }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @veiculo.errors, status: :unprocessable_entity }
-      end
+    if @veiculo.save
+      redirect_to [@proprietario, @veiculo], notice: "Veículo criado com sucesso."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /veiculos/1 or /veiculos/1.json
   def update
-    respond_to do |format|
-      if @veiculo.update(veiculo_params)
-        format.html { redirect_to @veiculo, notice: "Veiculo was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @veiculo }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @veiculo.errors, status: :unprocessable_entity }
-      end
+    if @veiculo.update(veiculo_params)
+      redirect_to [@proprietario, @veiculo], notice: "Veículo atualizado com sucesso."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /veiculos/1 or /veiculos/1.json
   def destroy
-    @veiculo.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to veiculos_path, notice: "Veiculo was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
-    end
+    @veiculo.destroy
+    redirect_to proprietario_veiculos_path(@proprietario), notice: "Veículo removido com sucesso."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_veiculo
-      @veiculo = Veiculo.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def veiculo_params
-      params.expect(veiculo: [ :placa, :renavam, :chassi ])
-    end
+  def set_proprietario
+    @proprietario = Proprietario.find(params[:proprietario_id])
+  end
+
+  def set_veiculo
+    @veiculo = @proprietario.veiculos.find(params[:id])
+  end
+
+  def veiculo_params
+    params.require(:veiculo).permit(:placa, :renavam)
+  end
 end

@@ -1,10 +1,19 @@
-<p style="color: green"><%= notice %></p>
+<h1>Veículo</h1>
 
-<%= render @veiculo %>
+<p><strong>Proprietário:</strong> <%= @proprietario.nome %> (<%= @proprietario.cpf_cnpj %>)</p>
+<p><strong>Placa:</strong> <%= @veiculo.placa %></p>
+<p><strong>Renavam:</strong> <%= @veiculo.renavam %></p>
+
+<br>
 
 <div>
-  <%= link_to "Edit this veiculo", edit_veiculo_path(@veiculo) %> |
-  <%= link_to "Back to veiculos", veiculos_path %>
+  <%= link_to "Editar", edit_proprietario_veiculo_path(@proprietario, @veiculo) %> |
+  <%= link_to "Voltar para veículos", proprietario_veiculos_path(@proprietario) %> |
+  <%= link_to "Ver proprietário", proprietario_path(@proprietario) %>
+</div>
 
-  <%= button_to "Destroy this veiculo", @veiculo, method: :delete %>
+<br>
+
+<div>
+  <%= button_to "Excluir veículo", proprietario_veiculo_path(@proprietario, @veiculo), method: :delete, data: { turbo_confirm: "Tem certeza?" } %>
 </div>

@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Proprietarios" %>
+
+<h1>Proprietarios</h1>
+
+<div id="proprietarios">
+  <% @proprietarios.each do |proprietario| %>
+    <%= render proprietario %>
+    <p>
+      <%= link_to "Show this proprietario", proprietario %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New proprietario", new_proprietario_path %>

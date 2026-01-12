@@ -1,11 +1,11 @@
-<% content_for :title, "New veiculo" %>
+<% content_for :title, "Novo veículo" %>
 
-<h1>New veiculo</h1>
+<h1>Novo veículo</h1>
 
-<%= render "form", veiculo: @veiculo %>
+<%= render "form", veiculo: @veiculo, proprietario: @proprietario %>
 
 <br>
 
 <div>
-  <%= link_to "Back to veiculos", veiculos_path %>
+  <%= link_to "Voltar para veículos", proprietario_veiculos_path(@proprietario) %>
 </div>
