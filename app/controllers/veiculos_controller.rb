@@ -34,8 +34,11 @@ class VeiculosController < ApplicationController
 
   def destroy
     @veiculo.destroy
-    redirect_to proprietario_veiculos_path(@proprietario), notice: "Veículo removido com sucesso."
+    redirect_to edit_proprietario_path(@proprietario),
+                notice: "Veículo removido com sucesso.",
+                status: :see_other
   end
+
 
   private
 
