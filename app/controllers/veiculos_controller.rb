@@ -18,24 +18,18 @@ class VeiculosController < ApplicationController
     @veiculo = @proprietario.veiculos.build(veiculo_params)
 
     if @veiculo.save
-      redirect_to [@proprietario, @veiculo], notice: "Veículo criado com sucesso."
+      redirect_to edit_proprietario_path(@proprietario), notice: "Veículo criado com sucesso."
     else
       render :new, status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordNotUnique
-    @veiculo.errors.add(:base, "Placa ou RENAVAM já cadastrados.")
-    render :new, status: :unprocessable_entity
   end
 
   def update
     if @veiculo.update(veiculo_params)
-      redirect_to [@proprietario, @veiculo], notice: "Veículo atualizado com sucesso."
+      redirect_to edit_proprietario_path(@proprietario), notice: "Veículo atualizado com sucesso."
     else
       render :edit, status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordNotUnique
-    @veiculo.errors.add(:base, "Placa ou RENAVAM já cadastrados.")
-    render :edit, status: :unprocessable_entity
   end
 
   def destroy

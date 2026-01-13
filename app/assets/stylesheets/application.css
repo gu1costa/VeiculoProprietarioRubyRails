@@ -16,47 +16,36 @@ body {
     color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-bottom: 3px solid #003366;
-
-    /* padding vai no .header-content (pra garantir altura padrão) */
     padding: 0;
 }
 
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
-
-    /* altura padrão em todas as páginas */
     min-height: 72px;
-
-    /* espaçamento padrão */
     padding: 16px 20px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
 }
 
-/* título do header não quebra (evita crescer o header) */
 .logo { min-width: 0; }
 .logo h1 {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.1;
     margin: 0;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 700px;
 }
 
-/* ações do header não quebram (evita crescer o header) */
 .header-actions {
     display: flex;
     gap: 12px;
     align-items: center;
-
     flex-wrap: nowrap;
     white-space: nowrap;
 }
@@ -64,11 +53,10 @@ body {
 .back-btn, .new-btn {
     color: #fff;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     padding: 8px 14px;
     transition: background 0.2s;
-    border-radius: 6px;
-
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -80,11 +68,11 @@ body {
 .new-btn {
     background: #fff;
     color: #0056a6;
+    border: 1px solid #fff;
 }
 
 .new-btn:hover { background: #f0f0f0; }
 
-/* no mobile: permite quebrar ações sem estourar layout */
 @media (max-width: 700px) {
     .header-content { min-height: auto; }
     .logo h1 { max-width: 100%; }
@@ -109,6 +97,7 @@ body {
     color: #0056a6;
     margin-bottom: 20px;
     font-size: 24px;
+    font-weight: 800;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 10px;
 }
@@ -121,21 +110,21 @@ body {
     border: 1px solid #d1d5db;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .card-header {
     background: #f9fafb;
     padding: 20px;
     border-bottom: 1px solid #e5e7eb;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .card-header h2 {
     color: #0056a6;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .card-body { padding: 25px; }
@@ -150,14 +139,13 @@ body {
     margin-bottom: 40px;
 }
 
+/* Fiel ao clonado: hover quase imperceptível */
 .dashboard-cards .card {
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    transition: box-shadow 0.2s, border-color 0.2s;
 }
-
 .dashboard-cards .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-color: #0056a6;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    border-color: #cbd5e1;
 }
 
 .card-icon {
@@ -168,8 +156,8 @@ body {
 
 .card-title {
     color: #1f2937;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 800;
     margin-bottom: 15px;
 }
 
@@ -186,15 +174,15 @@ body {
     padding: 8px 20px;
     background: #0056a6;
     color: #fff;
-    border: none;
-    font-weight: 600;
+    border: 1px solid #0056a6;
+    font-weight: 700;
     cursor: pointer;
     transition: background 0.2s;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 6px;
+    border-radius: 0;
     line-height: 1;
 }
 
@@ -208,10 +196,22 @@ body {
 
 .btn-outline:hover { background: #f0f7ff; }
 
-.btn-danger { background: #dc2626; }
+.btn-danger {
+    background: #dc2626;
+    border-color: #dc2626;
+}
 .btn-danger:hover { background: #b91c1c; }
 
 .btn-sm { padding: 6px 12px; font-size: 14px; }
+
+/* secundário cinza (usado em cancelar) */
+.btn.btn-secondary {
+    background: #6b7280;
+    border-color: #6b7280;
+}
+.btn.btn-secondary:hover {
+    background: #4b5563;
+}
 
 /* =========================
    Alerts
@@ -220,7 +220,7 @@ body {
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .alert-success {
@@ -243,13 +243,14 @@ body {
     border: 1px solid #e5e7eb;
     padding: 18px;
     color: #374151;
-    border-radius: 8px;
+    border-radius: 0;
     text-align: center;
 }
 
 .empty-state h3 {
     margin-bottom: 10px;
     color: #374151;
+    font-weight: 800;
 }
 
 /* =========================
@@ -259,7 +260,7 @@ body {
     background: #fff;
     border: 1px solid #d1d5db;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 table { width: 100%; border-collapse: collapse; }
@@ -277,8 +278,8 @@ th, td {
 
 th {
     color: #374151;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 800;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -302,15 +303,15 @@ tr:hover { background: #f9fafb; }
 .form-group label {
     display: block;
     color: #374151;
-    font-weight: 600;
+    font-weight: 800;
     margin-bottom: 8px;
 }
 
 .form-control {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 0;
     font-size: 1em;
     transition: border-color 0.2s;
     background: #fff;
@@ -357,9 +358,9 @@ tr:hover { background: #f9fafb; }
     background: #e0f2fe;
     color: #0369a1;
     padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 /* =========================
@@ -376,7 +377,7 @@ tr:hover { background: #f9fafb; }
     background: transparent;
     border: none;
     padding: 12px 4px;
-    font-weight: 700;
+    font-weight: 800;
     color: #6b7280;
     cursor: pointer;
     border-bottom: 3px solid transparent;
@@ -396,7 +397,7 @@ tr:hover { background: #f9fafb; }
    ========================= */
 .result-title {
     font-size: 22px;
-    font-weight: 800;
+    font-weight: 900;
     color: #111827;
     margin-bottom: 14px;
 }
@@ -405,7 +406,7 @@ tr:hover { background: #f9fafb; }
     border: 1px solid #e5e7eb;
     padding: 18px;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .result-top {
@@ -424,7 +425,7 @@ tr:hover { background: #f9fafb; }
 }
 
 .result-status {
-    font-weight: 700;
+    font-weight: 800;
     color: #111827;
 }
 
@@ -442,7 +443,7 @@ tr:hover { background: #f9fafb; }
     background: #f9fafb;
     padding: 12px;
     border: 1px solid #eef2f7;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .result-box-wide { grid-column: 1 / -1; }
@@ -453,13 +454,13 @@ tr:hover { background: #f9fafb; }
     text-transform: uppercase;
     color: #6b7280;
     margin-bottom: 4px;
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .result-value {
     font-size: 16px;
     color: #111827;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 /* =========================
@@ -493,7 +494,7 @@ tr:hover { background: #f9fafb; }
     font-weight: 900;
     font-size: 13px;
     border: 1px solid #bae6fd;
-    border-radius: 6px;
+    border-radius: 0;
 }
 
 /* =========================
@@ -514,3 +515,135 @@ tr:hover { background: #f9fafb; }
 .inline-form { margin: 0; }
 .actions .inline-form { display: inline; }
 .actions .inline-form button { width: auto; }
+
+/* =========================
+   Garantia extra: remove radius de elementos padrão
+   ========================= */
+input, select, textarea, button { border-radius: 0; }
+
+/* =========================
+   Layout central igual ao clonado
+   ========================= */
+.page-center {
+    max-width: 560px; /* padrão “normal” */
+    margin: 0 auto;
+}
+
+.page-heading {
+    color: #0056a6;
+    font-size: 22px;
+    font-weight: 900;
+    margin: 10px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+/* =========================
+   Panels (cards com header)
+   ========================= */
+.panel {
+    background: #fff;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-top: 18px;
+}
+
+.panel-head {
+    padding: 16px 18px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fff;
+}
+
+/* 👇 aqui fica fiel ao clonado: título azul e maior */
+.panel-head h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 900;
+    color: #0056a6;
+}
+
+.panel-body { padding: 18px; }
+
+.panel-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   Lista de veículos em cards (se usar)
+   ========================= */
+.vehicle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.vehicle-item {
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 12px 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+}
+
+.vehicle-left { min-width: 0; }
+
+.vehicle-plate {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 900;
+    color: #111827;
+}
+
+.vehicle-icon {
+    width: 18px;
+    text-align: center;
+}
+
+.vehicle-sub {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.vehicle-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+/* =========================
+   Bloco de adicionar veículo (se usar)
+   ========================= */
+.add-vehicle {
+    margin-top: 14px;
+    background: #eef2f7;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+}
+
+.add-vehicle-title {
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+/* Ajusta form-row no card central */
+.page-center .form-row {
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 700px) {
+    .page-center .form-row { grid-template-columns: 1fr; }
+}

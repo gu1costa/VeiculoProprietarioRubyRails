@@ -1,4 +1,4 @@
-<%= form_with(model: [proprietario, veiculo]) do |f| %>
+<%= form_with(model: [proprietario, veiculo], local: true) do |f| %>
   <% if veiculo.errors.any? %>
     <div class="alert alert-error">
       <strong>Não foi possível salvar:</strong>
@@ -10,48 +10,38 @@
     </div>
   <% end %>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="placa">Placa * (sem formatação)</label>
-      <%= f.text_field :placa,
-                       id: "placa",
-                       class: "form-control",
-                       maxlength: 7,
-                       placeholder: "ABC1234",
-                       required: true %>
-    </div>
-
-    <div class="form-group">
-      <label for="renavam">RENAVAM * (somente números)</label>
-      <%= f.text_field :renavam,
-                       id: "renavam",
-                       class: "form-control",
-                       maxlength: 11,
-                       placeholder: "00000000000",
-                       required: true,
-                       inputmode: "numeric" %>
-    </div>
+  <div class="form-group">
+    <label for="placa">Placa <span class="required">*</span></label>
+    <%= f.text_field :placa,
+                     id: "placa",
+                     class: "form-control",
+                     maxlength: 7,
+                     placeholder: "MMM3M33",
+                     required: true %>
   </div>
 
-  <div class="proprietario-info">
-    <strong>Nome:</strong> <%= proprietario.nome %><br>
-    <strong>CPF/CNPJ:</strong> <%= proprietario.cpf_cnpj %><br>
-    <strong>Endereço:</strong> <%= proprietario.endereco %>
+  <div class="form-group" style="margin-top: 14px;">
+    <label for="renavam">RENAVAM <span class="required">*</span></label>
+    <%= f.text_field :renavam,
+                     id: "renavam",
+                     class: "form-control",
+                     maxlength: 11,
+                     placeholder: "00000000000",
+                     required: true,
+                     inputmode: "numeric" %>
   </div>
 
-  <div class="form-actions">
-    <%= f.submit(veiculo.persisted? ? "Salvar Alterações" : "Cadastrar Veículo", class: "btn") %>
-    <%= link_to "Cancelar", proprietario_veiculos_path(proprietario), class: "btn btn-outline" %>
+  <div class="panel-actions">
+    <%= f.submit "Salvar Alterações", class: "btn" %>
+    <%= link_to "Cancelar", edit_proprietario_path(proprietario), class: "btn btn-outline" %>
   </div>
 <% end %>
 
 <script>
-    // Campo RENAVAM: permite apenas números
     document.getElementById('renavam')?.addEventListener('input', function(e) {
         e.target.value = e.target.value.replace(/\D/g, '');
     });
 
-    // Campo Placa: maiúsculas e remove especiais
     document.getElementById('placa')?.addEventListener('input', function(e) {
         e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     });
