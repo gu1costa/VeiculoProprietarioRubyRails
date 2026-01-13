@@ -22,6 +22,9 @@ class VeiculosController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotUnique
+    @veiculo.errors.add(:base, "Placa ou RENAVAM já cadastrados.")
+    render :new, status: :unprocessable_entity
   end
 
   def update
@@ -30,6 +33,9 @@ class VeiculosController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotUnique
+    @veiculo.errors.add(:base, "Placa ou RENAVAM já cadastrados.")
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
