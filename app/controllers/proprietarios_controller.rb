@@ -49,11 +49,10 @@ class ProprietariosController < ApplicationController
 
   # DELETE /proprietarios/1 or /proprietarios/1.json
   def destroy
-    @proprietario.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to proprietarios_path, notice: "Proprietario was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+    if @proprietario.destroy
+      redirect_to proprietarios_path, notice: "Proprietário removido com sucesso.", status: :see_other
+    else
+      redirect_to proprietarios_path, alert: @proprietario.errors.full_messages.to_sentence, status: :see_other
     end
   end
 

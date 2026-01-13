@@ -1,3 +1,4 @@
+# app/models/proprietario.rb
 # frozen_string_literal: true
 
 class Proprietario < ApplicationRecord
@@ -6,5 +7,5 @@ class Proprietario < ApplicationRecord
   has_many :veiculos,
            class_name: "Veiculo",
            foreign_key: :id_prop,
-           dependent: :restrict_with_error
+           dependent: :destroy
 end

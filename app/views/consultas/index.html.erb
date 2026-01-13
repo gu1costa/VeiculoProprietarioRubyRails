@@ -1,11 +1,8 @@
 <% content_for :title, "Consulta de Veículos - DETRAN" %>
 
-    <div class="header-actions">
-      <%= link_to "← Voltar", root_path, class: "back-btn" %>
-    </div>
-  </div>
-</div>
-
+<% content_for :header_actions do %>
+  <%= link_to "← Voltar", root_path, class: "back-btn" %>
+<% end %>
 
 <div class="card" style="max-width: 900px; margin: 0 auto;">
   <h2 class="page-title" style="margin-bottom: 16px;">Consulta de Veículos por Placa ou CPF/CNPJ</h2>

@@ -31,10 +31,13 @@
             <div class="actions">
               <%= link_to "Veículos", proprietario_veiculos_path(p), class: "btn btn-sm" %>
               <%= link_to "Editar", edit_proprietario_path(p), class: "btn btn-sm btn-outline" %>
-              <%= link_to "Remover",
-                          proprietario_path(p),
-                          class: "btn btn-sm btn-danger",
-                          data: { turbo_method: :delete, turbo_confirm: "ATENÇÃO: Esta ação irá remover o proprietário e todos os veículos associados. Deseja continuar?" } %>
+
+              <%= button_to "Remover",
+                            proprietario_path(p),
+                            method: :delete,
+                            class: "btn btn-sm btn-danger",
+                            form_class: "inline-form",
+                            data: { turbo_confirm: "ATENÇÃO: Esta ação irá remover o proprietário e todos os veículos associados. Deseja continuar?" } %>
             </div>
           </td>
         </tr>
