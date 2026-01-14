@@ -90,6 +90,18 @@
         </div>
       <% end %>
 
+      <% if @veiculo&.errors&.any? %>
+        <div class="alert alert-error">
+          <strong>Não foi possível salvar:</strong>
+          <ul style="margin-left: 18px; margin-top: 8px;">
+            <% @veiculo.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+
       <!-- Adicionar novo veículo (inline) -->
       <div class="add-vehicle">
         <div class="add-vehicle-title">➕ Adicionar Novo Veículo</div>

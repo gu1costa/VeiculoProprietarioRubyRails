@@ -13,7 +13,9 @@ class ProprietariosController < ApplicationController
   end
 
   def edit
+    @veiculo = @proprietario.veiculos.build
   end
+
 
   def create
     @proprietario = Proprietario.new(proprietario_params)
@@ -39,7 +41,11 @@ class ProprietariosController < ApplicationController
     respond_to do |format|
       begin
         if @proprietario.update(proprietario_params)
-          format.html { redirect_to proprietarios_path, notice: "Proprietário atualizado com sucesso.", status: :see_other }
+          format.html do
+            redirect_to edit_proprietario_path(@proprietario),
+                        notice: "Proprietário atualizado com sucesso.",
+                        status: :see_other
+          end
           format.json { render :show, status: :ok, location: @proprietario }
         else
           format.html { render :edit, status: :unprocessable_entity }
