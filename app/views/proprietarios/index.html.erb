@@ -7,6 +7,26 @@
   <%= link_to "+ Novo Proprietário", new_proprietario_path, class: "new-btn" %>
 <% end %>
 
+<!-- Campo de Busca -->
+<div class="search-container" style="margin-bottom: 20px;">
+  <%= form_with url: proprietarios_path, method: :get, local: true, class: "search-form" do |f| %>
+    <div class="form-row" style="display: flex; gap: 10px; align-items: center;">
+      <div style="flex: 1;">
+        <%= text_field_tag :search, params[:search], 
+             class: "form-control", 
+             placeholder: "Buscar por nome, endereço ou CPF/CNPJ...",
+             style: "width: 100%;" %>
+      </div>
+      <div>
+        <%= f.submit "🔍 Buscar", class: "btn" %>
+        <% if params[:search].present? %>
+          <%= link_to "Limpar", proprietarios_path, class: "btn btn-secondary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
 <% if @proprietarios.present? %>
   <div class="table-container">
     <table>
@@ -45,14 +65,35 @@
     </table>
   </div>
 
+  <!-- Paginação -->
+  <div class="pagination-container" style="margin-top: 20px; text-align: center;">
+    <%= paginate @proprietarios %>
+  </div>
+
   <% content_for :footer do %>
-    Sistema DETRAN - Gerenciamento de Proprietários | Total: <%= @proprietarios.size %> registros
+    Sistema DETRAN - Gerenciamento de Proprietários | 
+    Total: <%= @proprietarios.total_count %> registros
+    <% if params[:search].present? %>
+     | Encontrados: <%= @proprietarios.count %> resultados
+    <% end %>
   <% end %>
 <% else %>
   <div class="empty-state">
-    <h3>Nenhum proprietário cadastrado</h3>
-    <p>Cadastre o primeiro proprietário para começar</p>
-    <%= link_to "Cadastrar Proprietário", new_proprietario_path, class: "btn", style: "margin-top: 20px;" %>
+    <h3>
+      <% if params[:search].present? %>
+        Nenhum proprietário encontrado para "<%= params[:search] %>"
+      <% else %>
+        Nenhum proprietário cadastrado
+      <% end %>
+    </h3>
+    <p>
+      <% if params[:search].present? %>
+        <%= link_to "Limpar busca", proprietarios_path, class: "btn", style: "margin-top: 20px;" %>
+      <% else %>
+        Cadastre o primeiro proprietário para começar
+        <%= link_to "Cadastrar Proprietário", new_proprietario_path, class: "btn", style: "margin-left: 10px;" %>
+      <% end %>
+    </p>
   </div>
 
   <% content_for :footer do %>

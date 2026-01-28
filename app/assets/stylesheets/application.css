@@ -647,3 +647,127 @@ input, select, textarea, button { border-radius: 0; }
 @media (max-width: 700px) {
     .page-center .form-row { grid-template-columns: 1fr; }
 }
+
+/* =========================
+   Paginação Kaminari
+   ========================= */
+.pagination-container {
+    margin: 25px 0;
+    text-align: center;
+}
+
+/* =========================
+   Busca - Botões mesmo tamanho
+   ========================= */
+.search-form .btn {
+    height: 44px;
+    min-width: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+.pagination .page,
+.pagination .first,
+.pagination .last,
+.pagination .prev,
+.pagination .next {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 36px;
+    padding: 0 12px;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-right: none;
+    color: #374151;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 0;
+}
+
+.pagination .page:last-child,
+.pagination .first:last-child,
+.pagination .last:last-child,
+.pagination .prev:last-child,
+.pagination .next:last-child {
+    border-right: 1px solid #d1d5db;
+}
+
+.pagination .page:hover,
+.pagination .first:hover,
+.pagination .last:hover,
+.pagination .prev:hover,
+.pagination .next:hover {
+    background: #f9fafb;
+    color: #0056a6;
+}
+
+.pagination .current {
+    background: #0056a6;
+    border-color: transparent;
+    color: #fff;
+    font-weight: 900;
+}
+
+.pagination .gap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 36px;
+    padding: 0 12px;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-right: none;
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.pagination .gap:last-child {
+    border-right: 1px solid #d1d5db;
+}
+
+/* Setinhas minimalistas para navegação */
+.pagination .prev span,
+.pagination .next span,
+.pagination .first span,
+.pagination .last span {
+    display: inline;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 600px) {
+    .pagination {
+        gap: 0;
+    }
+    
+    .pagination .page,
+    .pagination .first,
+    .pagination .last,
+    .pagination .prev,
+    .pagination .next {
+        min-width: 36px;
+        height: 32px;
+        padding: 0 8px;
+        font-size: 13px;
+    }
+}

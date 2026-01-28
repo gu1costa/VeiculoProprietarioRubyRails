@@ -130,6 +130,24 @@
 </div>
 
 <script>
+    // Forçar maiúsculas e bloquear caracteres inválidos no nome
+    document.getElementById('proprietario_nome')?.addEventListener('input', function(e) {
+        // Remove números e símbolos, permite apenas letras e espaços
+        e.target.value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').toUpperCase();
+    });
+    
+    // Forçar maiúsculas e bloquear caracteres inválidos no endereço
+    document.getElementById('proprietario_endereco')?.addEventListener('input', function(e) {
+        // Permite letras, números, espaços e caracteres básicos de endereço
+        e.target.value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9\s,\-\.\º\/]/g, '').toUpperCase();
+    });
+
+    // Limpar CPF/CNPJ
+    document.getElementById('proprietario_cpf_cnpj')?.addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+
+    // Validações dos campos de veículo
     document.getElementById('renavam_inline')?.addEventListener('input', (e) => {
         e.target.value = e.target.value.replace(/\D/g, '');
     });

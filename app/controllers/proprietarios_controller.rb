@@ -3,6 +3,16 @@ class ProprietariosController < ApplicationController
 
   def index
     @proprietarios = Proprietario.order(:id)
+    
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @proprietarios = @proprietarios.where(
+        "nome ILIKE ? OR endereco ILIKE ? OR cpf_cnpj ILIKE ?",
+        search_term, search_term, search_term
+      )
+    end
+    
+    @proprietarios = @proprietarios.page(params[:page]).per(10)
   end
 
   def show

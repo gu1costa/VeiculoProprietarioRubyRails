@@ -9,10 +9,11 @@ class Proprietario < ApplicationRecord
            dependent: :destroy
 
   before_validation :normalize_cpf_cnpj
+  before_validation :normalize_uppercase_fields
 
   validates :cpf_cnpj, presence: true
-  validates :nome, presence: true, length: { maximum: 100 }
-  validates :endereco, presence: true
+  validates :nome, presence: true, length: { maximum: 100 }, format: { with: /\A[a-zA-ZÀ-ÿ\s]+\z/, message: "só pode conter letras e espaços" }
+  validates :endereco, presence: true, format: { with: /\A[a-zA-ZÀ-ÿ0-9\s,\-\.\º\/]+\z/, message: "contém caracteres inválidos" }
 
   validates :cpf_cnpj,
             uniqueness: { message: "já está cadastrado" }
@@ -23,6 +24,11 @@ class Proprietario < ApplicationRecord
 
   def normalize_cpf_cnpj
     self.cpf_cnpj = cpf_cnpj.to_s.gsub(/\D/, "")
+  end
+
+  def normalize_uppercase_fields
+    self.nome = nome.to_s.upcase.strip if nome.present?
+    self.endereco = endereco.to_s.upcase.strip if endereco.present?
   end
 
   def cpf_cnpj_must_be_valid_length

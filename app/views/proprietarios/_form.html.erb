@@ -44,6 +44,18 @@
 <% end %>
 
 <script>
+    // Forçar maiúsculas e bloquear caracteres inválidos no nome
+    document.querySelector('input[name="proprietario[nome]"]')?.addEventListener('input', function(e) {
+        // Remove números e símbolos, permite apenas letras e espaços
+        e.target.value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').toUpperCase();
+    });
+    
+    // Forçar maiúsculas e bloquear caracteres inválidos no endereço
+    document.querySelector('input[name="proprietario[endereco]"]')?.addEventListener('input', function(e) {
+        // Permite letras, números, espaços e caracteres básicos de endereço
+        e.target.value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9\s,\-\.\º\/]/g, '').toUpperCase();
+    });
+
     // CPF/CNPJ: só números
     document.querySelector('input[name="proprietario[cpf_cnpj]"]')?.addEventListener('input', function(e) {
         e.target.value = e.target.value.replace(/\D/g, '');
