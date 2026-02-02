@@ -50,6 +50,7 @@
           <td>
             <div class="actions">
               <%= link_to "Editar", edit_proprietario_path(p), class: "btn btn-sm btn-outline" %>
+              <%= link_to "Adicionar Veículo", new_proprietario_veiculo_path(p), class: "btn btn-sm" %>
 
               <%= button_to "Remover",
                             proprietario_path(p),

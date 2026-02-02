@@ -29,7 +29,10 @@
 
         <div class="form-group">
           <label>CPF/CNPJ <span class="required">*</span></label>
-          <%= f.text_field :cpf_cnpj, class: "form-control", maxlength: 14, required: true, inputmode: "numeric" %>
+          <%= f.text_field :cpf_cnpj, class: "form-control", maxlength: 14, required: true, inputmode: "numeric", readonly: true, style: "background-color: #f5f5f5; cursor: not-allowed;" %>
+<!--          <small style="color: #6b7280; font-size: 12px; margin-top: 4px; display: block;">
+            ⚠️ CPF/CNPJ não pode ser alterado para manter a integridade do sistema
+          </small>-->
         </div>
 
         <div class="form-group">
@@ -101,30 +104,6 @@
         </div>
       <% end %>
 
-
-      <!-- Adicionar novo veículo (inline) -->
-      <div class="add-vehicle">
-        <div class="add-vehicle-title">➕ Adicionar Novo Veículo</div>
-
-        <%= form_with model: [@proprietario, @proprietario.veiculos.build], local: true do |f| %>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Placa <span class="required">*</span></label>
-              <%= f.text_field :placa, class: "form-control", maxlength: 7, placeholder: "EX: ABC1D23", required: true, id: "placa_inline" %>
-            </div>
-
-            <div class="form-group">
-              <label>RENAVAM <span class="required">*</span></label>
-              <%= f.text_field :renavam, class: "form-control", maxlength: 11, placeholder: "Ex: 12345678901", required: true, inputmode: "numeric", id: "renavam_inline" %>
-            </div>
-          </div>
-
-          <div class="panel-actions" style="padding-top: 0; border-top: 0;">
-            <%= f.submit "➕ Adicionar Veículo", class: "btn" %>
-          </div>
-        <% end %>
-      </div>
-
     </div>
   </div>
 </div>
@@ -140,18 +119,5 @@
     document.getElementById('proprietario_endereco')?.addEventListener('input', function(e) {
         // Permite letras, números, espaços e caracteres básicos de endereço
         e.target.value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9\s,\-\.\º\/]/g, '').toUpperCase();
-    });
-
-    // Limpar CPF/CNPJ
-    document.getElementById('proprietario_cpf_cnpj')?.addEventListener('input', function(e) {
-        e.target.value = e.target.value.replace(/\D/g, '');
-    });
-
-    // Validações dos campos de veículo
-    document.getElementById('renavam_inline')?.addEventListener('input', (e) => {
-        e.target.value = e.target.value.replace(/\D/g, '');
-    });
-    document.getElementById('placa_inline')?.addEventListener('input', (e) => {
-        e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     });
 </script>

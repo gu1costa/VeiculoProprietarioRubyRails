@@ -21,11 +21,11 @@ class VeiculosController < ApplicationController
       if @veiculo.save
         redirect_to edit_proprietario_path(@proprietario), notice: "Veículo criado com sucesso."
       else
-        render "proprietarios/edit", status: :unprocessable_entity
+        render :new, status: :unprocessable_entity
       end
     rescue ActiveRecord::RecordNotUnique
       aplicar_erros_de_unicidade(@veiculo)
-      render "proprietarios/edit", status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

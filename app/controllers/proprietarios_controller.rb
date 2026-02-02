@@ -23,7 +23,6 @@ class ProprietariosController < ApplicationController
   end
 
   def edit
-    @veiculo = @proprietario.veiculos.build
   end
 
 

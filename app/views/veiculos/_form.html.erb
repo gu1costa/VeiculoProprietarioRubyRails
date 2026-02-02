@@ -16,7 +16,7 @@
                      id: "placa",
                      class: "form-control",
                      maxlength: 7,
-                     placeholder: "MMM3M33",
+                     placeholder: "EX: ABC1D23",
                      required: true %>
   </div>
 
@@ -26,14 +26,14 @@
                      id: "renavam",
                      class: "form-control",
                      maxlength: 11,
-                     placeholder: "00000000000",
+                     placeholder: "Ex: 12345678901",
                      required: true,
                      inputmode: "numeric" %>
   </div>
 
   <div class="panel-actions">
-    <%= f.submit "Salvar Alterações", class: "btn" %>
-    <%= link_to "Cancelar", edit_proprietario_path(proprietario), class: "btn btn-outline" %>
+    <%= f.submit "💾 Cadastrar Veículo", class: "btn" %>
+    <%= link_to "Cancelar", edit_proprietario_path(proprietario), class: "btn btn-secondary" %>
   </div>
 <% end %>
 
